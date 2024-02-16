@@ -1,0 +1,4 @@
+enum TypeFile {
+  arms,
+  personals,
+}
