@@ -7,8 +7,8 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TabBarView(children: [
-      const ViewTabDowload(),
+    return const TabBarView(children: [
+      ViewTabDowload(),
       BuildTable(),
     ]);
   }

@@ -1,8 +1,10 @@
 import 'package:exceler_plus_flutter/data/isar/arm_bd.dart';
 import 'package:exceler_plus_flutter/data/isar/arm_exception_bd.dart';
 import 'package:exceler_plus_flutter/di/di.dart';
+import 'package:exceler_plus_flutter/home/presenter/bloc/load_arms_bloc.dart';
 import 'package:exceler_plus_flutter/home/presenter/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -29,7 +31,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomeScreen(title: 'Flutter Demo Home Page'),
+      home: BlocProvider(
+        create: (context) => getIt<LoadArmsBloc>(),
+        child: const HomeScreen(title: 'Flutter Demo Home Page'),
+      ),
     );
   }
 }

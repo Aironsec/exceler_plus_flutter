@@ -1,5 +1,8 @@
+import 'package:exceler_plus_flutter/core/presentation/frame_in_out.dart';
+import 'package:exceler_plus_flutter/home/presenter/bloc/load_arms_bloc.dart';
 import 'package:exceler_plus_flutter/home/presenter/widgets/table.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ViewTabDowload extends StatelessWidget {
   const ViewTabDowload({super.key});
@@ -9,21 +12,44 @@ class ViewTabDowload extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Expanded(
-            child: BuildTable(),
-          ),
-          const Padding(
-            padding: EdgeInsets.only(left: 8.0),
-            child: Column(
-              children: [
-                TextButton(onPressed: null, child: Text('Загрузить')),
-                Text('jshdjskskfdksfkskfslfsfkslflskfksfksfjsklfjslkfjkls'),
-              ],
-            ),
-          )
+          _buildLeftCol(),
+          _buildRightCol(),
         ],
       ),
     );
   }
+}
+
+Widget _buildLeftCol() {
+  return Expanded(
+    child: frameInOut(const BuildTable()),
+  );
+}
+
+Widget _buildRightCol() {
+  return frameInOut(_rightPanel());
+}
+
+Widget _rightPanel() {
+  return BlocBuilder<LoadArmsBloc, LoadArmsState>(
+    builder: (context, state) {
+      return Column(
+        children: [
+          TextButton(
+              onPressed: () {
+                context.read<LoadArmsBloc>().add(OpenFile(context));
+              },
+              child: const Text('Загрузить файл')),
+          Text(
+            state.pathFile,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      );
+    },
+  );
 }
