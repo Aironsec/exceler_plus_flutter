@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget frameInOut(Widget cild) {
+Widget frameInOut({required Widget child}) {
   return DecoratedBox(
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(10),
@@ -11,7 +11,7 @@ Widget frameInOut(Widget cild) {
     ),
     child: Padding(
       padding: const EdgeInsets.all(8.0),
-      child: cild,
+      child: child,
     ),
   );
 }
