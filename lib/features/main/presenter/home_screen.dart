@@ -1,4 +1,4 @@
-import 'package:exceler_plus_flutter/features/main/presenter/body.dart';
+import 'package:exceler_plus_flutter/features/main/presenter/body_home.dart';
 import 'package:exceler_plus_flutter/features/main/presenter/tab_bar_home_sreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,16 +34,8 @@ class _HomeScreenState extends State<HomeScreen> {
             title: Text(widget.title),
             bottom: const TabBarHomeScreen(),
           ),
-          body: const Body(),
-          bottomNavigationBar:
-              BlocSelector<MainBloc, MainState, MainInitial>(
-            selector: (state) {
-              return state.;
-            },
-            builder: (context, state) {
-              return BottomNavigationBar(items: items(),);
-            },
-          ),
+          body: const BodyHome(),
+          bottomNavigationBar: BottomNavigationBar(items: items()),
         );
       }),
     );

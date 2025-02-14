@@ -1,13 +1,21 @@
 import 'package:exceler_plus_flutter/di/di.dart';
+import 'package:exceler_plus_flutter/features/auth/presentation/auth_screen.dart';
+import 'package:exceler_plus_flutter/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:exceler_plus_flutter/features/main/presenter/home_screen.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'features/main/bloc/bloc/main_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   configureDependencies();
+  HydratedBloc.storage = await HydratedStorage.build(
+    storageDirectory: kIsWeb
+        ? HydratedStorageDirectory.web
+        : HydratedStorageDirectory((await getTemporaryDirectory()).path),
+  );
   runApp(const MyApp());
 }
 
@@ -24,9 +32,23 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: BlocProvider(
-        lazy: true,
-        create: (context) => getIt<MainBloc>(),
-        child: const HomeScreen(title: 'Рабочее место контролёра'),
+        create: (context) => AuthCubit(),
+        child: BlocConsumer<AuthCubit, AuthState>(
+          listener: (context, state) {
+            final textSnackBar = state.user == null
+                ? 'Вход не выполнен'
+                : '${state.user?.login}, вход выполнен';
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(textSnackBar)));
+          },
+          builder: (context, state) {
+            return (state is Login)
+                ? const HomeScreen(
+                    title: 'rtrt',
+                  )
+                : const AuthScreen();
+          },
+        ),
       ),
     );
   }
