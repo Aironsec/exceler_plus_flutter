@@ -1,35 +1,13 @@
 part of 'auth_cubit.dart';
 
-enum LoginState { login, noLogin, wait, error }
+@freezed
+sealed class AuthState with _$AuthState {
+  factory AuthState.notAuthorized() = _AuthStateNotAuthorized;
 
-@immutable
-class AuthState {
-  final UserEntity? user;
-  final String? error;
-  const AuthState({this.user, this.error});
+  factory AuthState.authorized(UserEntity user) = _AuthStateAuthorized;
 
-  factory AuthState.fromJson(Map<String, dynamic> json) {
-    return AuthState(user: json["user"], error: json["error"]);
-  }
+  factory AuthState.error(String error) = _AuthStateError;
 
-  Map<String, dynamic> toJson() => {
-        "user": user,
-        "error": error,
-      };
-}
-
-final class NoLogin extends AuthState {
-  const NoLogin() : super(user: null);
-}
-
-final class Login extends AuthState {
-  const Login(UserEntity user) : super(user: user);
-}
-
-final class LoginError extends AuthState {
-  const LoginError(String error) : super(user: null, error: error);
-}
-
-final class Logout extends AuthState {
-  const Logout() : super(user: null);
+  factory AuthState.fromJson(Map<String, dynamic> json) =>
+      _$AuthStateFromJson(json);
 }

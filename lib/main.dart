@@ -22,7 +22,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -32,21 +31,13 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: BlocProvider(
-        create: (context) => AuthCubit(),
-        child: BlocConsumer<AuthCubit, AuthState>(
-          listener: (context, state) {
-            final textSnackBar = state.user == null
-                ? 'Вход не выполнен'
-                : '${state.user?.login}, вход выполнен';
-            ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text(textSnackBar)));
-          },
+        create: (context) => getIt<AuthCubit>(),
+        child: BlocBuilder<AuthCubit, AuthState>(
           builder: (context, state) {
-            return (state is Login)
-                ? const HomeScreen(
-                    title: 'rtrt',
-                  )
-                : const AuthScreen();
+            return state.maybeWhen(
+              orElse: () => const AuthScreen(),
+              authorized: (user) => HomeScreen(title: user.fio),
+            );
           },
         ),
       ),

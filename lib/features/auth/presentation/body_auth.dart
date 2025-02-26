@@ -7,6 +7,8 @@ class BodyAuth extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loginTextController = TextEditingController();
+    final passwordTextController = TextEditingController();
     return Center(
       child: SizedBox(
         height: 200,
@@ -14,21 +16,24 @@ class BodyAuth extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            const TextField(
-              decoration: InputDecoration(
+            TextField(
+              controller: loginTextController,
+              decoration: const InputDecoration(
                 labelText: 'Логин',
                 border: OutlineInputBorder(),
               ),
             ),
-            const TextField(
-              decoration: InputDecoration(
+            TextField(
+              controller: passwordTextController,
+              decoration: const InputDecoration(
                 labelText: 'Пароль',
                 border: OutlineInputBorder(),
               ),
             ),
             IconButton.filled(
               autofocus: true,
-              onPressed: () => context.read<AuthCubit>().login(),
+              onPressed: () => context.read<AuthCubit>().login(
+                  loginTextController.text + passwordTextController.text),
               icon: const Icon(Icons.input),
             ),
           ],

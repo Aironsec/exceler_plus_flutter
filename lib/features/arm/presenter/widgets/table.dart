@@ -14,9 +14,9 @@ class BuildTable extends StatelessWidget {
       child: BlocBuilder<LoadArmsBloc, LoadArmsState>(
         builder: (context, state) {
           return Table(
-            border: TableBorder.symmetric(
-              inside: const BorderSide(color: Colors.black, width: 1),
-              outside: const BorderSide(color: Colors.black, width: 1),
+            border: const TableBorder.symmetric(
+              inside: BorderSide(color: Colors.black, width: 1),
+              outside: BorderSide(color: Colors.black, width: 1),
             ),
             columnWidths: const {
               0: FixedColumnWidth(30),
