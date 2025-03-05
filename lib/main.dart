@@ -1,7 +1,8 @@
 import 'package:exceler_plus_flutter/di/di.dart';
 import 'package:exceler_plus_flutter/features/auth/presentation/auth_screen.dart';
-import 'package:exceler_plus_flutter/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:exceler_plus_flutter/features/main/presenter/home_screen.dart';
+import 'package:exceler_plus_flutter/features/auth/presentation/error_screen.dart';
+import 'package:exceler_plus_flutter/features/lic/presentation/cubit/lic_cubit.dart';
+import 'package:exceler_plus_flutter/features/lic/presentation/registration_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,12 +32,14 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: BlocProvider(
-        create: (context) => getIt<AuthCubit>(),
-        child: BlocBuilder<AuthCubit, AuthState>(
+        lazy: false,
+        create: (context) => getIt<LicCubit>(),
+        child: BlocBuilder<LicCubit, LicState>(
           builder: (context, state) {
-            return state.maybeWhen(
-              orElse: () => const AuthScreen(),
-              authorized: (user) => HomeScreen(title: user.fio),
+            return state.when(
+              notLic: () => const RegistrationScreen(),
+              lic: (lic) => AuthScreen(lic),
+              error: (error) => ErrorScreen(text: error),
             );
           },
         ),

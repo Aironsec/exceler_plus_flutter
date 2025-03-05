@@ -11,7 +11,19 @@ part 'auth_cubit.g.dart';
 @injectable
 class AuthCubit extends HydratedCubit<AuthState> {
   final IAuthData repo;
-  AuthCubit(this.repo) : super(AuthState.notAuthorized());
+  AuthCubit(this.repo) : super(AuthState.notAuthorized()) {
+    repo.getLic() == null
+        ? emit(AuthState.error('Лицензия отсутствует'))
+        : emit(AuthState.notAuthorized());
+  }
+
+  // static AuthState get stateInit {
+  //   final fileLic = '${Directory.current.path}/license.isar';
+  //   if (File(fileLic).existsSync()) {
+  //     return AuthState.notAuthorized();
+  //   }
+  //   return AuthState.error('Лицензия отсутствует');
+  // }
 
   login(String token) async {
     final user = await repo.getUser(token);

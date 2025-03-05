@@ -47,6 +47,7 @@ dependencies:
   json_annotation: ^4.9.0
   licensing:
     path: licensing
+  device_info_plus: ^11.3.0
 
 dev_dependencies:
   flutter_test:
