@@ -13,7 +13,8 @@ part 'lic_cubit.g.dart';
 class LicCubit extends HydratedCubit<LicState> {
   ILicData repo;
   LicCubit(this.repo) : super(const LicState.notLic()) {
-    repo.fileLicPath() ?? emit(const LicState.error(StrLic.errorLic));
+    repo.fileIsarExist(repo.dbName) ??
+        emit(const LicState.error(StrLic.errorLic));
   }
 
   void registration(String key) async {

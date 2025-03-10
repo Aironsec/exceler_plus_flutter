@@ -1,14 +1,15 @@
 import 'package:isar/isar.dart';
 
-part 'model_user.g.dart';
+part 'user.g.dart';
 
 @collection
-class ModelUser {
+class User {
   Id id = Isar.autoIncrement;
-  String? fio;
-  String? hash;
+  late String fio;
+  late String name;
+  late String hash;
   @Enumerated(EnumType.ordinal32)
-  Role? role;
+  Role role = Role.user;
 }
 
 enum Role { admin, user }

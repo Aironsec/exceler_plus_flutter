@@ -1,6 +1,7 @@
 import 'package:exceler_plus_flutter/di/di.dart';
 import 'package:exceler_plus_flutter/features/auth/presentation/auth_screen.dart';
-import 'package:exceler_plus_flutter/features/auth/presentation/error_screen.dart';
+import 'package:exceler_plus_flutter/core/presentation/error_screen.dart';
+import 'package:exceler_plus_flutter/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:exceler_plus_flutter/features/lic/presentation/cubit/lic_cubit.dart';
 import 'package:exceler_plus_flutter/features/lic/presentation/registration_screen.dart';
 import 'package:flutter/foundation.dart';
@@ -25,16 +26,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Exceler plus',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: BlocProvider(
-        lazy: false,
-        create: (context) => getIt<LicCubit>(),
-        child: BlocBuilder<LicCubit, LicState>(
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => getIt<LicCubit>()),
+        BlocProvider(create: (context) => getIt<AuthCubit>()),
+      ],
+      child: MaterialApp(
+        title: 'Exceler plus',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        home: BlocBuilder<LicCubit, LicState>(
           builder: (context, state) {
             return state.when(
               notLic: () => const RegistrationScreen(),

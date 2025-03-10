@@ -14,16 +14,11 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-UserEntity _$UserEntityFromJson(Map<String, dynamic> json) {
-  return _UserEntity.fromJson(json);
-}
-
 /// @nodoc
 mixin _$UserEntity {
   String get fio => throw _privateConstructorUsedError;
   Role get role => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $UserEntityCopyWith<UserEntity> get copyWith =>
       throw _privateConstructorUsedError;
@@ -106,12 +101,9 @@ class __$$UserEntityImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$UserEntityImpl implements _UserEntity {
   const _$UserEntityImpl({required this.fio, required this.role});
-
-  factory _$UserEntityImpl.fromJson(Map<String, dynamic> json) =>
-      _$$UserEntityImplFromJson(json);
 
   @override
   final String fio;
@@ -132,7 +124,6 @@ class _$UserEntityImpl implements _UserEntity {
             (identical(other.role, role) || other.role == role));
   }
 
-  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, fio, role);
 
@@ -141,21 +132,11 @@ class _$UserEntityImpl implements _UserEntity {
   @pragma('vm:prefer-inline')
   _$$UserEntityImplCopyWith<_$UserEntityImpl> get copyWith =>
       __$$UserEntityImplCopyWithImpl<_$UserEntityImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$UserEntityImplToJson(
-      this,
-    );
-  }
 }
 
 abstract class _UserEntity implements UserEntity {
   const factory _UserEntity(
       {required final String fio, required final Role role}) = _$UserEntityImpl;
-
-  factory _UserEntity.fromJson(Map<String, dynamic> json) =
-      _$UserEntityImpl.fromJson;
 
   @override
   String get fio;

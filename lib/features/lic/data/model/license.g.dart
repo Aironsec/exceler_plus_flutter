@@ -58,12 +58,7 @@ int _licenseEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
-  {
-    final value = object.hash;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
+  bytesCount += 3 + object.hash.length * 3;
   {
     final value = object.idMachine;
     if (value != null) {
@@ -93,8 +88,8 @@ License _licenseDeserialize(
 ) {
   final object = License();
   object.count = reader.readByte(offsets[0]);
-  object.date = reader.readDateTimeOrNull(offsets[1]);
-  object.hash = reader.readStringOrNull(offsets[2]);
+  object.date = reader.readDateTime(offsets[1]);
+  object.hash = reader.readString(offsets[2]);
   object.id = id;
   object.idMachine = reader.readStringOrNull(offsets[3]);
   return object;
@@ -110,9 +105,9 @@ P _licenseDeserializeProp<P>(
     case 0:
       return (reader.readByte(offset)) as P;
     case 1:
-      return (reader.readDateTimeOrNull(offset)) as P;
+      return (reader.readDateTime(offset)) as P;
     case 2:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 3:
       return (reader.readStringOrNull(offset)) as P;
     default:
@@ -262,24 +257,8 @@ extension LicenseQueryFilter
     });
   }
 
-  QueryBuilder<License, License, QAfterFilterCondition> dateIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'date',
-      ));
-    });
-  }
-
-  QueryBuilder<License, License, QAfterFilterCondition> dateIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'date',
-      ));
-    });
-  }
-
   QueryBuilder<License, License, QAfterFilterCondition> dateEqualTo(
-      DateTime? value) {
+      DateTime value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'date',
@@ -289,7 +268,7 @@ extension LicenseQueryFilter
   }
 
   QueryBuilder<License, License, QAfterFilterCondition> dateGreaterThan(
-    DateTime? value, {
+    DateTime value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -302,7 +281,7 @@ extension LicenseQueryFilter
   }
 
   QueryBuilder<License, License, QAfterFilterCondition> dateLessThan(
-    DateTime? value, {
+    DateTime value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -315,8 +294,8 @@ extension LicenseQueryFilter
   }
 
   QueryBuilder<License, License, QAfterFilterCondition> dateBetween(
-    DateTime? lower,
-    DateTime? upper, {
+    DateTime lower,
+    DateTime upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
@@ -331,24 +310,8 @@ extension LicenseQueryFilter
     });
   }
 
-  QueryBuilder<License, License, QAfterFilterCondition> hashIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'hash',
-      ));
-    });
-  }
-
-  QueryBuilder<License, License, QAfterFilterCondition> hashIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'hash',
-      ));
-    });
-  }
-
   QueryBuilder<License, License, QAfterFilterCondition> hashEqualTo(
-    String? value, {
+    String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -361,7 +324,7 @@ extension LicenseQueryFilter
   }
 
   QueryBuilder<License, License, QAfterFilterCondition> hashGreaterThan(
-    String? value, {
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -376,7 +339,7 @@ extension LicenseQueryFilter
   }
 
   QueryBuilder<License, License, QAfterFilterCondition> hashLessThan(
-    String? value, {
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -391,8 +354,8 @@ extension LicenseQueryFilter
   }
 
   QueryBuilder<License, License, QAfterFilterCondition> hashBetween(
-    String? lower,
-    String? upper, {
+    String lower,
+    String upper, {
     bool includeLower = true,
     bool includeUpper = true,
     bool caseSensitive = true,
@@ -838,13 +801,13 @@ extension LicenseQueryProperty
     });
   }
 
-  QueryBuilder<License, DateTime?, QQueryOperations> dateProperty() {
+  QueryBuilder<License, DateTime, QQueryOperations> dateProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'date');
     });
   }
 
-  QueryBuilder<License, String?, QQueryOperations> hashProperty() {
+  QueryBuilder<License, String, QQueryOperations> hashProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'hash');
     });
