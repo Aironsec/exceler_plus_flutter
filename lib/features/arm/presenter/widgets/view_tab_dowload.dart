@@ -1,4 +1,4 @@
-import 'package:exceler_plus_flutter/core/presentation/frame_in_out.dart';
+import 'package:exceler_plus_flutter/core/presentation/widget/frame_in_out.dart';
 import 'package:exceler_plus_flutter/features/arm/presenter/bloc/load_arms_bloc.dart';
 import 'package:exceler_plus_flutter/features/arm/presenter/widgets/table.dart';
 import 'package:flutter/material.dart';

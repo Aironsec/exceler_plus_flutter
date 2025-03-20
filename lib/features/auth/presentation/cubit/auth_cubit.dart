@@ -13,7 +13,7 @@ class AuthCubit extends Cubit<AuthState> {
   final IAuthData repo;
   AuthCubit(this.repo) : super(AuthState.notAuthorized());
 
-  login({required String name, required String password}) async {
+  void login({required String name, required String password}) async {
     final user = await repo.getUser(name, password);
     user == null
         ? emit(AuthState.error(StrAuth.error))

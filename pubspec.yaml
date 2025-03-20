@@ -48,6 +48,7 @@ dependencies:
   licensing:
     path: licensing
   device_info_plus: ^11.3.0
+  window_manager: ^0.4.3
 
 dev_dependencies:
   flutter_test:

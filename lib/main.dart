@@ -1,6 +1,6 @@
 import 'package:exceler_plus_flutter/di/di.dart';
 import 'package:exceler_plus_flutter/features/auth/presentation/auth_screen.dart';
-import 'package:exceler_plus_flutter/core/presentation/error_screen.dart';
+import 'package:exceler_plus_flutter/core/presentation/page/error_screen.dart';
 import 'package:exceler_plus_flutter/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:exceler_plus_flutter/features/lic/presentation/cubit/lic_cubit.dart';
 import 'package:exceler_plus_flutter/features/lic/presentation/registration_screen.dart';
@@ -16,7 +16,8 @@ void main() async {
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: kIsWeb
         ? HydratedStorageDirectory.web
-        : HydratedStorageDirectory((await getTemporaryDirectory()).path),
+        : HydratedStorageDirectory(
+            (await getApplicationSupportDirectory()).path),
   );
   runApp(const MyApp());
 }
