@@ -21,4 +21,10 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   void logout() => emit(AuthState.notAuthorized());
+
+  @override
+  Future<void> close() {
+    repo.closeDb();
+    return super.close();
+  }
 }

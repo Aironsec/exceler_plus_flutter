@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
           builder: (context, state) {
             return state.when(
               notLic: () => const RegistrationScreen(),
-              lic: (lic) => AuthScreen(lic),
+              lic: (lic) => const AuthScreen(),
               error: (error) => ErrorScreen(text: error),
             );
           },

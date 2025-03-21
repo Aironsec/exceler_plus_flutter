@@ -1,8 +1,9 @@
+import 'package:exceler_plus_flutter/core/presentation/page/error_screen.dart';
 import 'package:exceler_plus_flutter/features/auth/data/models/user.dart';
 import 'package:exceler_plus_flutter/features/auth/domain/entity/user_entity.dart';
 import 'package:exceler_plus_flutter/features/auth/presentation/auth_screen.dart';
 import 'package:exceler_plus_flutter/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:exceler_plus_flutter/features/lic/domain/entity/lic_entity.dart';
+import 'package:exceler_plus_flutter/features/lic/presentation/cubit/lic_cubit.dart';
 import 'package:exceler_plus_flutter/features/main/presenter/bloc/main_bloc.dart';
 import 'package:exceler_plus_flutter/features/main/presenter/body_home.dart';
 import 'package:exceler_plus_flutter/features/main/presenter/str_main.dart';
@@ -12,10 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key, required this.user, required this.lic});
-
-  final UserEntity user;
-  final LicEntity lic;
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,14 +34,30 @@ class HomeScreen extends StatelessWidget {
               notAuthorized: () => Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => AuthScreen(lic),
+                    builder: (context) => BlocBuilder<LicCubit, LicState>(
+                      builder: (context, state) {
+                        return state.maybeWhen(
+                          lic: (lic) => const AuthScreen(),
+                          orElse: () =>
+                              const ErrorScreen(text: StrMain.errorLic),
+                        );
+                      },
+                    ),
                   )),
             );
           },
           child: Scaffold(
             appBar: AppBar(
               backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-              title: Text(user.fio),
+              title: BlocBuilder<AuthCubit, AuthState>(
+                builder: (context, state) {
+                  String fio = 'Ошибка, пользователь не известен';
+                  state.whenOrNull(
+                    authorized: (user) => fio = user.fio,
+                  );
+                  return Text(fio);
+                },
+              ),
               bottom: const TabBarHomeScreen(),
               actions: [
                 IconButton(
@@ -60,15 +74,24 @@ class HomeScreen extends StatelessWidget {
                     decoration: BoxDecoration(color: Colors.blue),
                     child: Text('Drawer Header'),
                   ),
-                  ListTile(
-                    enabled: permitted(user),
-                    title: const Text(StrMain.titleUsers),
-                    onTap: () {
-                      Navigator.pop(context);
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const UserScreen()));
+                  BlocBuilder<AuthCubit, AuthState>(
+                    builder: (context, state) {
+                      UserEntity user =
+                          const UserEntity(fio: '', role: Role.user);
+                      state.whenOrNull(
+                        authorized: (user1) => user = user1,
+                      );
+                      return ListTile(
+                        enabled: permitted(user),
+                        title: const Text(StrMain.titleUsers),
+                        onTap: () {
+                          Navigator.pop(context);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const UserScreen()));
+                        },
+                      );
                     },
                   )
                 ],

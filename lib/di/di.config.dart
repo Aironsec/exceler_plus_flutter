@@ -26,8 +26,8 @@ import '../features/lic/domain/repository/i_lic_data.dart' as _i8;
 import '../features/lic/presentation/cubit/lic_cubit.dart' as _i10;
 import '../features/main/presenter/bloc/main_bloc.dart' as _i19;
 import '../features/main/presenter/cubit/user_cubit.dart' as _i12;
-import '../features/main/repository/i_repo_main.dart' as _i14;
-import '../features/main/repository/repo_main.dart' as _i15;
+import '../features/main/domain/repository/i_main_repo.dart' as _i14;
+import '../features/main/data/repository/main_repo_impl.dart' as _i15;
 import 'di.dart' as _i20;
 
 extension GetItInjectableX on _i1.GetIt {
@@ -59,8 +59,8 @@ extension GetItInjectableX on _i1.GetIt {
     );
     gh.factory<_i12.UserCubit>(() => _i12.UserCubit(gh<_i3.IAuthData>()));
     gh.factory<_i13.AuthCubit>(() => _i13.AuthCubit(gh<_i3.IAuthData>()));
-    gh.singleton<_i14.IRepoMain>(
-        () => _i15.RepoMain(gh<_i11.SharedPreferences>()));
+    gh.singleton<_i14.IMainRepo>(
+        () => _i15.MainRepoImpl(gh<_i11.SharedPreferences>()));
     gh.singleton<_i16.IRepository>(() => _i17.ArmRepositoryImpl(
           gh<_i5.IDataSource>(instanceName: 'FileDataSourceImpl'),
           gh<_i5.IDataSource>(instanceName: 'IsarDataSourceImpl'),
@@ -68,7 +68,7 @@ extension GetItInjectableX on _i1.GetIt {
         ));
     gh.factory<_i18.LoadArmsBloc>(
         () => _i18.LoadArmsBloc(gh<_i16.IRepository>()));
-    gh.factory<_i19.MainBloc>(() => _i19.MainBloc(gh<_i14.IRepoMain>()));
+    gh.factory<_i19.MainBloc>(() => _i19.MainBloc(gh<_i14.IMainRepo>()));
     return this;
   }
 }

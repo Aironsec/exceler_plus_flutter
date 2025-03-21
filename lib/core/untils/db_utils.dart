@@ -8,6 +8,13 @@ class OpenDB {
   String dbName;
   OpenDB({required this.dbName});
 
+  Isar get openDbExisting =>
+      Isar.getInstance(dbName) ??
+      Isar.openSync(
+          name: dbName,
+          [LicenseSchema, UserSchema],
+          directory: Directory.current.path);
+
   Isar? openDb(String dbName) {
     final fLic = fileIsarExist(dbName);
     if (fLic == null) {

@@ -1,15 +1,14 @@
 import 'package:exceler_plus_flutter/core/presentation/page/error_screen.dart';
 import 'package:exceler_plus_flutter/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:exceler_plus_flutter/features/auth/presentation/str_auth.dart';
-import 'package:exceler_plus_flutter/features/lic/domain/entity/lic_entity.dart';
+import 'package:exceler_plus_flutter/features/lic/presentation/cubit/lic_cubit.dart';
 import 'package:exceler_plus_flutter/features/main/presenter/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:exceler_plus_flutter/core/presentation/widget/extension.dart';
 
 class AuthScreen extends StatelessWidget {
-  final LicEntity lic;
-  const AuthScreen(this.lic, {super.key});
+  const AuthScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +23,18 @@ class AuthScreen extends StatelessWidget {
               StrAuth.titleScreen,
               textAlign: TextAlign.center,
             ),
-            Text(
-              StrAuth.idRM + lic.idMachine,
-              textAlign: TextAlign.end,
-              style: const TextStyle(fontSize: 10.0),
+            BlocBuilder<LicCubit, LicState>(
+              builder: (context, state) {
+                String idMachine = '';
+                state.whenOrNull(
+                  lic: (lic) => idMachine = lic.idMachine,
+                );
+                return Text(
+                  StrAuth.idRM + idMachine,
+                  textAlign: TextAlign.end,
+                  style: const TextStyle(fontSize: 10.0),
+                );
+              },
             )
           ],
         ),
@@ -38,7 +45,7 @@ class AuthScreen extends StatelessWidget {
             authorized: (user) => Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => HomeScreen(user: user, lic: lic),
+                  builder: (context) => const HomeScreen(),
                 )),
             error: (error) => Navigator.push(
                 context,
