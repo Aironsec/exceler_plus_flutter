@@ -30,6 +30,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   cupertino_icons: ^1.0.2
   path_provider: ^2.1.1
   isar: ^3.1.0+1
@@ -49,6 +51,10 @@ dependencies:
     path: licensing
   device_info_plus: ^11.3.0
   window_manager: ^0.4.3
+  jiffy: ^6.3.2
+  pluto_grid: ^8.0.0
+  calendar_date_picker2: ^2.0.0
+  datepicker_dropdown: ^0.1.6
 
 dev_dependencies:
   flutter_test:

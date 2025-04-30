@@ -1,3 +1,4 @@
+import 'package:exceler_plus_flutter/features/main/presenter/view_model/main_menu_model.dart';
 import 'package:flutter/material.dart';
 
 class TabBarHomeScreen extends StatelessWidget implements PreferredSizeWidget {
@@ -14,7 +15,12 @@ class TabBarHomeScreen extends StatelessWidget implements PreferredSizeWidget {
 
 List<Tab> _buildTabs() {
   return [
-    const Tab(text: 'АРМ'),
-    const Tab(text: 'ПЕРСОНАЛ'),
+    Tab(text: MainMenuModel.deadlines.title),
+    Tab(text: MainMenuModel.specification.title),
+    Tab(text: MainMenuModel.planeWorks.title),
+    Tab(text: MainMenuModel.progressWorks.title),
+    Tab(text: MainMenuModel.bid.title),
+    Tab(text: MainMenuModel.distributionDepartaments.title),
+    Tab(text: MainMenuModel.brit.title),
   ];
 }

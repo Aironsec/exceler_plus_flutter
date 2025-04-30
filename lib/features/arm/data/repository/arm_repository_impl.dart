@@ -6,18 +6,15 @@ import 'package:exceler_plus_flutter/features/arm/data/datasource/isar_data_sour
 import 'package:exceler_plus_flutter/features/arm/data/i_repository.dart';
 import 'package:exceler_plus_flutter/features/arm/domain/usecase/check_dto.dart';
 import 'package:injectable/injectable.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 @Singleton(as: IRepository)
 class ArmRepositoryImpl implements IRepository {
   ArmRepositoryImpl(
     @Named.from(FileDataSourceImpl) this.fileDataSource,
     @Named.from(IsarDataSourceImpl) this.isarDataSource,
-    this.pref,
   );
   IDataSource fileDataSource;
   IDataSource isarDataSource;
-  SharedPreferences pref;
   static const nidLoad = 'Требуется загрузка';
 
   @override
@@ -31,15 +28,4 @@ class ArmRepositoryImpl implements IRepository {
     }
   }
 
-  @override
-  Future<String> getPathBD() async {
-    final pathDB = pref.getString('path_bd') ?? nidLoad;
-    return pathDB;
-  }
-
-  @override
-  Future<String> getPathFiles() async {
-    final pathFiles = pref.getString('path_files') ?? nidLoad;
-    return pathFiles;
-  }
 }

@@ -15,7 +15,7 @@ extension WidgetModifier on Widget {
     return Expanded(flex: flex, child: this);
   }
 
-  Widget padding({
+  Padding padding({
     double left = 0.0,
     double top = 0.0,
     double right = 0.0,

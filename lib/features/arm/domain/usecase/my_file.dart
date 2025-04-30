@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:exceler_plus_flutter/features/arm/domain/enum/type_file.dart';
-import 'package:exceler_plus_flutter/features/arm/presenter/result_model.dart';
+import 'package:exceler_plus_flutter/result_model.dart';
 
 class MyFile {
   MyFile({required this.path}) {
@@ -23,10 +23,10 @@ class MyFile {
     }
   }
 
-  final correctNameArm = RegExp(
-      r'^\d{2,3}[-]\d{1,3}[-][Q|А-Я]+\d[-]?\d?|^[А-Я]{2,4}[-][А-Я|\w]{1,3}[\/\]?[-]?[Q|А-Я]?\d[-]?\d?|^\d{2}[-][А-Я]{3}\d');
-  final correctFIO = RegExp(
-      r'^[А-ЯЁ][а-яё]+[-]?[А-ЯЁ]?[а-яё]+[ ][А-Я][.][А-Я][.]|[Исполнитель]');
+  final sempleCheckNameOi = RegExp(
+      r'(^\d{2,3}[-]\d{1,3}[-][Q|А-Я]+\d[-]?\d?|^[А-Я]{2,4}[-][А-Я|\w]{1,3}[\/\]?[-]?[Q|А-Я]?\d[-]?\d?|^\d{2}[-][А-Я]{3}\d)|([ВП]{2}[[:space:]][ГК]{2}[-][А-Я]{2,3}|[ВП]{2}[[:space:]]\d{2}[-]\d{2,3}|[ВП]{2}[[:space:]]\d{2,3})');
+  final sempleCheckFIO = RegExp(
+      r'^[А-ЯЁ][а-яё]+[-]?[А-ЯЁ]?[а-яё]+[[:space:]][А-Я][.][А-Я][.]|[Исполнитель]');
 
   // void getRowsFile() {
   //   rows = File(path).readAsLinesSync();

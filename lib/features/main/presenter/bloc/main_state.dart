@@ -1,9 +1,7 @@
 part of 'main_bloc.dart';
 
-@immutable
-sealed class MainState {}
-
-final class MainInitial extends MainState {
-  final MainEntity state;
-  MainInitial(this.state);
+@freezed
+class MainState with _$MainState {
+  const factory MainState.initial() = _Initial;
+  const factory MainState.deadlinesData(Map<int, List<DeadlinesData>> data) = _DeadLinesData;
 }

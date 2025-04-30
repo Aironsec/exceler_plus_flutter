@@ -7,6 +7,7 @@ import 'package:exceler_plus_flutter/features/lic/presentation/registration_scre
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -33,7 +34,12 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => getIt<AuthCubit>()),
       ],
       child: MaterialApp(
-        title: 'Exceler plus',
+        localizationsDelegates: GlobalMaterialLocalizations.delegates,
+        supportedLocales: const [
+          Locale('ru', 'RU'),
+        ],
+        locale: const Locale('ru'),
+        title: 'Рабочее место',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,

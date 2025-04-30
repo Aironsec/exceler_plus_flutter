@@ -1,6 +1,4 @@
-sealed class Result {
-  Result();
-}
+sealed class Result {}
 
 class Success<T> extends Result {
   T data;
